@@ -63,6 +63,7 @@
       margin-top: 0.5rem;
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
     button {
       padding: 0.3rem 0.6rem;
@@ -156,6 +157,18 @@
       height: 100vh !important;
       z-index: 9999 !important;
       background: black !important;
+    }
+    .fullscreen-iframe-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 10000;
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -281,8 +294,7 @@
       <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
       <script src="main.js"></script>
   <script>
-
-function scrollCarrusel(direccion) {
+    function scrollCarrusel(direccion) {
       const carrusel = document.getElementById("canales-inferiores");
       const cantidad = 300 * direccion;
       carrusel.scrollBy({ left: cantidad, behavior: "smooth" });
@@ -494,6 +506,20 @@ function quitarGraficoTV(index) {
       const isFullscreen = iframe.classList.toggle("fullscreen-iframe");
       const boton = document.getElementById(`btnFullscreen${index}`);
       if (boton) boton.textContent = isFullscreen ? "❌ Salir de Fullscreen" : "🔍 Fullscreen";
+
+      let botonSalir = document.getElementById(`btnExitFullscreen${index}`);
+      if (isFullscreen) {
+        if (!botonSalir) {
+          botonSalir = document.createElement("button");
+          botonSalir.id = `btnExitFullscreen${index}`;
+          botonSalir.textContent = "❌ Salir de Fullscreen";
+          botonSalir.className = "fullscreen-iframe-button";
+          botonSalir.onclick = () => toggleFullscreenGrafico(index);
+          document.body.appendChild(botonSalir);
+        }
+      } else {
+        if (botonSalir) botonSalir.remove();
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
