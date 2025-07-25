@@ -427,7 +427,7 @@
       const query = document.getElementById("youtubeSearch").value.trim();
       if (!query) return alert("Escribe una búsqueda.");
     
-      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${apiKey}`)
+      fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=40&q=${encodeURIComponent(query)}&key=${apiKey}`)
         .then(res => res.json())
         .then(data => {
           if (!data.items.length) return alert("No se encontraron resultados.");
