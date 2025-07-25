@@ -390,9 +390,9 @@
     });
 
    Promise.all([
-  fetch("update2.m3u").then(res => res.text()),
   fetch("colombia.m3u").then(res => res.text()),
-  fetch("update3xxx.m3u").then(res => res.text())
+  fetch("colombia.m3u").then(res => res.text()),
+  fetch("colombia.m3u").then(res => res.text())
 ])
 .then(([data1, data2, data3]) => {
   const canales1 = parseM3U(data1);
