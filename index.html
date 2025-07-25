@@ -389,14 +389,22 @@
       }
     });
 
-    fetch("update2.m3u")
-      .then(res => res.text())
-      .then(data => {
-        const canales = parseM3U(data);
-        mostrarCanales(canales, true);
-        console.log("✅ Lista M3U cargada automáticamente");
-      })
-      .catch(err => console.error("❌ Error al cargar la lista M3U:", err));
+   Promise.all([
+  fetch("update2.m3u").then(res => res.text()),
+  fetch("colombia.m3u").then(res => res.text()),
+  fetch("deportes.m3u").then(res => res.text())
+])
+.then(([data1, data2, data3]) => {
+  const canales1 = parseM3U(data1);
+  const canales2 = parseM3U(data2);
+  const canales3 = parseM3U(data3);
+
+  const todosLosCanales = [...canales1, ...canales2, ...canales3];
+  mostrarCanales(todosLosCanales, true);
+  console.log("✅ Todas las listas M3U fueron cargadas automáticamente");
+})
+.catch(err => console.error("❌ Error al cargar alguna lista M3U:", err));
+
   </script>
   <script>
     let apiKey = "AIzaSyA4NpwgJmEzBGGTzFFjShyrtWICgSSml-I";
